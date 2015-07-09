@@ -74,6 +74,9 @@ var dataTypeTranslation = function(typeName) {
     case 'timestamp with time zone':
       return 'datetime';
       break;
+    case 'timestamp without time zone':
+      return 'datetime';
+      break;
     default:
       return 'varchar';
   }
@@ -108,6 +111,10 @@ var buildTable = function(schemas) {
       console.log(('Adding attribute: '.yellow + (column).bold.underline.white + ' to the table').blue);
       
       var tableColumn = tableColumns[column];
+      
+      console.log('Data Type: '.bold.red + (tableColumn.data_type).bold.white);
+      console.log('Converted To: '.bold.red + (dataTypeTranslation(tableColumn.data_type)).bold.white);
+      
       model.attributes[column] = {
         type: dataTypeTranslation(tableColumn.data_type),
         columnName: tableColumn.column_name
